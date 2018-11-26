@@ -40,7 +40,7 @@ bool IsLock(int x, int y)
 			arr[y + 1][x] != NONE &&
 			arr[y][x + 1] != NONE)) {
 		return true;
-		//printf("check1\n");
+		
 	}
 	return false;
 }
@@ -55,17 +55,10 @@ void makeMaze(int x, int y, int cnt)
 	}
 	if (x == 39 && y == 39) return;
 	if (IsLock(x, y)) {
-		/*int tX = (rand() % WIDTH);
-		if (tX == 0) tX++;
-		int tY = (rand() % HEIGHT);
-		if (tY == 0)tY++;
-		//printf("check1\n");
-		makeMaze(tX, tY, cnt + 1);*/
 		return;
 	}
 	int num = 1;
 
-	//printMap();
 	arr[y][x] = ROAD;
 	try
 	{
@@ -159,7 +152,6 @@ void makeMaze(int x, int y, int cnt)
 	catch (const std::exception&)
 	{
 		return;
-		//makeMaze(x, y, cnt);
 	}
 	try
 	{
@@ -253,7 +245,6 @@ void makeMaze(int x, int y, int cnt)
 	catch (const std::exception&)
 	{
 		return;
-		//makeMaze(x, y, cnt);
 	}
 
 }
