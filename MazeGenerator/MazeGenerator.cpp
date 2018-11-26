@@ -3,18 +3,16 @@
 
 #include "pch.h"
 #include <iostream>
-#include<Windows.h>
 #include<stdlib.h>
 #include<ctime>
-#define WIDTH 50
-#define HEIGHT 50
+#define WIDTH 80
+#define HEIGHT 80
 
 
 void printMap(void);
 void printNum(void);
 bool IsLock(int x, int y);
 void makeMaze(int x, int y);
-void gotoxy(int x, int y);
 
 int arr[HEIGHT + 1][WIDTH + 1] = { 0, };
 
@@ -26,12 +24,6 @@ enum Map {
 enum Direction {
 	TOP, RIGHT, BOTTOM, LEFT
 };
-
-void gotoxy(int x, int y)
-{
-	COORD pos = { x,y };
-	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
-}
 
 bool IsLock(int x, int y)
 {
@@ -48,15 +40,9 @@ bool IsLock(int x, int y)
 
 void makeMaze(int x, int y)
 {
-	if (++tem % 50 == 0) {
-		gotoxy(0, 0);
-		printMap();
-		printf("%d %d\n", x, y);
-	}
-	if (x == 39 && y == 39) return;
 	if (IsLock(x, y)) {
 		for (int i = 1; i < HEIGHT; i++) {
-			for (int j = WIDTH-1; j > 0; j--) {
+			for (int j = 0; j < WIDTH; j++) {
 				if (arr[i][j] == WALL &&
 					(arr[i - 1][j] == ROAD ||
 						arr[i][j - 1] == ROAD ||
@@ -68,6 +54,7 @@ void makeMaze(int x, int y)
 							arr[i][j + 1] == NONE )) {
 					arr[i][j] = ROAD;
 					makeMaze(j, i);
+					return;
 				}
 			}
 		}
@@ -202,7 +189,6 @@ void makeMaze(int x, int y)
 			{
 				return;
 			}
-			break;
 		case RIGHT:
 			if (arr[y][x + 1] == NONE && x < WIDTH - 1)
 			{
@@ -222,7 +208,6 @@ void makeMaze(int x, int y)
 			{
 				return;
 			}
-			break;
 		case BOTTOM:
 			if (arr[y + 1][x] == NONE && y < HEIGHT - 1)
 			{
@@ -241,7 +226,6 @@ void makeMaze(int x, int y)
 			{
 				return;
 			}
-			break;
 		case LEFT:
 			if (arr[y][x - 1] == NONE && x > 1)
 			{
@@ -260,7 +244,6 @@ void makeMaze(int x, int y)
 			{
 				return;
 			}
-			break;
 		default:
 			return;
 			break;
@@ -315,11 +298,8 @@ int main()
 		}
 	}
 	makeMaze(1, 1);
-	//makeMaze(WIDTH - 1, HEIGHT - 1, 1200);
 	arr[0][1] = 4;
 	arr[HEIGHT][WIDTH - 1] = 4;
-	arr[HEIGHT - 1][WIDTH - 1] = ROAD;
-	gotoxy(0, 0);
 	printMap();
 	return 0;
 
