@@ -178,6 +178,8 @@ void makeMaze(int x, int y)
 					arr[y][x - 1] = WALL;
 				if (x < WIDTH - 1 && arr[y][x + 1] == NONE)
 					arr[y][x + 1] = WALL;
+				if (y < HEIGHT - 1 && arr[y + 1][x] == NONE)
+					arr[y + 1][x] = WALL;
 				makeMaze(x, y - 1);
 
 			}
@@ -189,10 +191,13 @@ void makeMaze(int x, int y)
 			{
 				return;
 			}
+			break;
 		case RIGHT:
 			if (arr[y][x + 1] == NONE && x < WIDTH - 1)
 			{
 				arr[y][x + 1] = ROAD;
+				if (x > 0 && arr[y][x - 1] == NONE)
+					arr[y][x - 1] = WALL;
 				if (y > 0 && arr[y - 1][x] == NONE)
 					arr[y - 1][x] = WALL;
 				if (y < HEIGHT - 1 && arr[y + 1][x] == NONE)
@@ -208,6 +213,7 @@ void makeMaze(int x, int y)
 			{
 				return;
 			}
+			break;
 		case BOTTOM:
 			if (arr[y + 1][x] == NONE && y < HEIGHT - 1)
 			{
@@ -216,6 +222,8 @@ void makeMaze(int x, int y)
 					arr[y][x - 1] = WALL;
 				if (x < WIDTH - 1 && arr[y][x + 1] == NONE)
 					arr[y][x + 1] = WALL;
+				if (y > 0 && arr[y - 1][x] == NONE)
+					arr[y - 1][x] = WALL;
 				makeMaze(x, y + 1);
 			}
 			else
@@ -226,10 +234,13 @@ void makeMaze(int x, int y)
 			{
 				return;
 			}
+			break;
 		case LEFT:
 			if (arr[y][x - 1] == NONE && x > 1)
 			{
 				arr[y][x - 1] = ROAD;
+				if (x < WIDTH - 1 && arr[y][x + 1] == NONE)
+					arr[y][x + 1] = WALL;
 				if (y > 0 && arr[y - 1][x] == NONE)
 					arr[y - 1][x] = WALL;
 				if (y < HEIGHT - 1 && arr[y + 1][x] == NONE)
@@ -244,6 +255,7 @@ void makeMaze(int x, int y)
 			{
 				return;
 			}
+			break;
 		default:
 			return;
 			break;
@@ -299,6 +311,7 @@ int main()
 	}
 	makeMaze(1, 1);
 	arr[0][1] = 4;
+	arr[HEIGHT-1][WIDTH - 1] = ROAD;
 	arr[HEIGHT][WIDTH - 1] = 4;
 	printMap();
 	return 0;
