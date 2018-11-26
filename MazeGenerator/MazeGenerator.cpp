@@ -9,12 +9,12 @@
 #define WIDTH 50
 #define HEIGHT 50
 
-int temp = 0;
 
 void printMap(void);
 void printNum(void);
 void gotoxy(int x, int y);
 bool IsLock(int x, int y);
+void makeMaze(int x, int y);
 
 int arr[HEIGHT + 1][WIDTH + 1] = { 0, };
 
@@ -45,14 +45,8 @@ bool IsLock(int x, int y)
 	return false;
 }
 
-void makeMaze(int x, int y, int cnt)
+void makeMaze(int x, int y)
 {
-	temp++;
-	if (temp % 15 == 0)
-	{
-		gotoxy(0, 0);
-		printMap();
-	}
 	if (x == 39 && y == 39) return;
 	if (IsLock(x, y)) {
 		return;
@@ -74,12 +68,12 @@ void makeMaze(int x, int y, int cnt)
 					arr[y][x - 1] = WALL;
 				if (x < WIDTH - 1 && arr[y][x + 1] == NONE)
 					arr[y][x + 1] = WALL;
-				makeMaze(x, y - 1, cnt + 1);
+				makeMaze(x, y - 1);
 
 			}
 			else
 			{
-				makeMaze(x, y, cnt);
+				makeMaze(x, y);
 			}
 			if (IsLock(x, y))
 			{
@@ -94,12 +88,12 @@ void makeMaze(int x, int y, int cnt)
 					arr[y - 1][x] = WALL;
 				if (y < HEIGHT - 1 && arr[y + 1][x] == NONE)
 					arr[y + 1][x] = WALL;
-				makeMaze(x + 1, y, cnt + 1);
+				makeMaze(x + 1, y);
 
 			}
 			else
 			{
-				makeMaze(x, y, cnt);
+				makeMaze(x, y);
 			}
 			if (IsLock(x, y))
 			{
@@ -114,11 +108,11 @@ void makeMaze(int x, int y, int cnt)
 					arr[y][x - 1] = WALL;
 				if (x < WIDTH - 1 && arr[y][x + 1] == NONE)
 					arr[y][x + 1] = WALL;
-				makeMaze(x, y + 1, cnt + 1);
+				makeMaze(x, y + 1);
 			}
 			else
 			{
-				makeMaze(x, y, cnt);
+				makeMaze(x, y);
 			}
 			if (IsLock(x, y))
 			{
@@ -133,11 +127,11 @@ void makeMaze(int x, int y, int cnt)
 					arr[y - 1][x] = WALL;
 				if (y < HEIGHT - 1 && arr[y + 1][x] == NONE)
 					arr[y + 1][x] = WALL;
-				makeMaze(x - 1, y, cnt + 1);
+				makeMaze(x - 1, y);
 			}
 			else
 			{
-				makeMaze(x, y, cnt);
+				makeMaze(x, y);
 			}
 			if (IsLock(x, y))
 			{
@@ -167,12 +161,12 @@ void makeMaze(int x, int y, int cnt)
 					arr[y][x - 1] = WALL;
 				if (x < WIDTH - 1 && arr[y][x + 1] == NONE)
 					arr[y][x + 1] = WALL;
-				makeMaze(x, y - 1, cnt + 1);
+				makeMaze(x, y - 1);
 
 			}
 			else
 			{
-				makeMaze(x, y, cnt);
+				makeMaze(x, y);
 			}
 			if (IsLock(x, y))
 			{
@@ -187,12 +181,12 @@ void makeMaze(int x, int y, int cnt)
 					arr[y - 1][x] = WALL;
 				if (y < HEIGHT - 1 && arr[y + 1][x] == NONE)
 					arr[y + 1][x] = WALL;
-				makeMaze(x + 1, y, cnt + 1);
+				makeMaze(x + 1, y);
 
 			}
 			else
 			{
-				makeMaze(x, y, cnt);
+				makeMaze(x, y);
 			}
 			if (IsLock(x, y))
 			{
@@ -207,11 +201,11 @@ void makeMaze(int x, int y, int cnt)
 					arr[y][x - 1] = WALL;
 				if (x < WIDTH - 1 && arr[y][x + 1] == NONE)
 					arr[y][x + 1] = WALL;
-				makeMaze(x, y + 1, cnt + 1);
+				makeMaze(x, y + 1);
 			}
 			else
 			{
-				makeMaze(x, y, cnt);
+				makeMaze(x, y);
 			}
 			if (IsLock(x, y))
 			{
@@ -226,11 +220,11 @@ void makeMaze(int x, int y, int cnt)
 					arr[y - 1][x] = WALL;
 				if (y < HEIGHT - 1 && arr[y + 1][x] == NONE)
 					arr[y + 1][x] = WALL;
-				makeMaze(x - 1, y, cnt + 1);
+				makeMaze(x - 1, y);
 			}
 			else
 			{
-				makeMaze(x, y, cnt);
+				makeMaze(x, y);
 			}
 			if (IsLock(x, y))
 			{
@@ -290,12 +284,11 @@ int main()
 			arr[i][j] = NONE;
 		}
 	}
-	makeMaze(1, 1, 0);
+	makeMaze(1, 1);
 	//makeMaze(WIDTH - 1, HEIGHT - 1, 1200);
 	arr[0][1] = 4;
 	arr[HEIGHT][WIDTH - 1] = 4;
 	arr[HEIGHT-1][WIDTH - 1] = ROAD;
-	gotoxy(0, 0);
 	printMap();
 	return 0;
 
